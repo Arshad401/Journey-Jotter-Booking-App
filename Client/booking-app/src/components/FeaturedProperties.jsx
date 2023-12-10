@@ -1,6 +1,9 @@
 import "./featuredProperties.css";
+import useFetch from "../components/hooks/UseFetch";
 
 const FeaturedProperties = () => {
+     
+    const {data, loading, error} = useFetch ("http://localhost:9900/api/hotels/");
   return (
     <div className="fp">
         <div className="fpItem">
