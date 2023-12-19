@@ -20,7 +20,7 @@
     "react": "^18.2.0",
     "react-date-range": "^1.4.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0"
+    "react-router-dom": "^6.21.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
@@ -31,8 +31,5 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "vite": "^5.0.0"
-    
-  } 
-  
-  
+  }
 }

@@ -23,7 +23,7 @@ const [openmodel, setOpenModel ] = useState(false)
 
 const { data, loading, error } = useFetch(`/api/hotels/find/${id}`);
 const { user } = useContext(AuthContext)
-const navigate = useNavigate
+const navigate = useNavigate()
 
 const { dates, options } = useContext(SearchContext);
 
@@ -81,11 +81,12 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
           <button className="bookNow">Reserve or Book Now</button>
           <h1 className="hotelTitle">{data.name}</h1>
           <div className="hotelAddress">
+
             <FontAwesomeIcon icon={faLocationDot} />
             <span> {data.address}</span>
           </div>
           <span className="hotelDistance">
-            Excellent Location{data.distance}m from center
+            Excellent Location{data.distance}mtr from center
           </span>
           <span className="hotelPriceHighlight">
            
@@ -102,7 +103,7 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
             <div className="hotelDetailsTexts">
               <h1 className="hotelTitle">
               {data.title}
-              </h1>
+              </h1>45l
               <p className="hotelDesc">
                {data.description}
               </p>
@@ -115,7 +116,6 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
-            
           </div>
         </div>
         <MailList />
