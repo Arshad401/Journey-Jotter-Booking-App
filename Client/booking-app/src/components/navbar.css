@@ -29,3 +29,24 @@
     cursor:pointer;
     color:#003580;
 }
+.navuser{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    
+    
+}
+
+.logoutBtn{
+    margin-left: 15px;
+    border: none;
+    padding: 5px 10px;
+    cursor:pointer;
+    color:#003580;
+}
+
+
+.logoutBtn:disabled{
+background-color: #0071c28c;
+cursor: not-allowed;
+}

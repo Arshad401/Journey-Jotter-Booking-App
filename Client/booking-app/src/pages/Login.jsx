@@ -3,6 +3,7 @@ import "./login.css";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -23,15 +24,19 @@ const Login = () => {
     try {
       const res = await axios.post("/api/auth/login", credentials);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      toast.success("Login Successfully")
       navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
+      toast.error("invalid user",error.response.data )
     }
   };
 
   return (
     <div className="login">
       <div className="lContainer">
+      <h2 className="logHead">Login</h2>
+  
         <input
           type="text"
           placeholder="username"
