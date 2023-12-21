@@ -6,6 +6,8 @@ const INITIAL_STATE = {
  error: null,
 };
 
+
+
 export const AuthContext = createContext(INITIAL_STATE);
 
 const AuthReducer = (state, action) => {

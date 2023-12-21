@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema ({
         type: Boolean,
         default: false,
      },
+     avatar:{
+      type: String,
+      default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+     },
 
 },{timestamps:true}
 );

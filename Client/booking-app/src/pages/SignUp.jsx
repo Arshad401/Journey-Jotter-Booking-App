@@ -4,6 +4,7 @@ import "./signup.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import GoogleAuth from "../components/GoogleAuth";
 
 function SignUp() {
   const [formdata, setFormData] = useState({
@@ -61,6 +62,7 @@ const navigate=useNavigate()
         <button className="Sbutton" onClick={handleSubmit}>
           Register
         </button>
+        <GoogleAuth />
       </div>
     </div>
   );

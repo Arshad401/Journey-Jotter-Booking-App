@@ -16,6 +16,7 @@ function Navbar() {
   toast.success("logout successfully")
   }
 
+  // console.log(user)
 
   return (
     <div className="navbar">
@@ -23,7 +24,7 @@ function Navbar() {
         <Link to={"/"} style={{color:"inherit",textDecoration:"none"}}>
         <span className="logo">JourneyJotter</span>
         </Link>
-     {user ? <div className="navuser">{user.username} 
+     {user ? <div className="navuser">{user?.rest?.username|| user.username} 
      
       <button className="logoutBtn"  disabled={loading} onClick={handleLogOut}>Logout</button>
      </div>: (  

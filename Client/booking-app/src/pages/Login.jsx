@@ -4,6 +4,9 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import GoogleAuth from "../components/GoogleAuth";
+
+
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -54,6 +57,7 @@ const Login = () => {
         <button disabled={loading} onClick={handleClick} className="lButton">
           Login
         </button>
+        <GoogleAuth />
         {error && <span>{error.message}</span>}
       </div>
     </div>
