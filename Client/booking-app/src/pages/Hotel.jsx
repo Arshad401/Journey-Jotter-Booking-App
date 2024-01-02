@@ -112,7 +112,7 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
                 <h1>Perfect for a {days}-night stay</h1>
                 <span>Couples particularly like the location they rated it 8.5 for a two-person trip while Mattupetty Dam is 32
                 km away</span>
-                <h2><b>${days * data.cheapestPrice * options.room}</b> ( {days}nights)
+                <h2><b> ₹{days * data.cheapestPrice * options.room}</b> ( {days}nights)
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>

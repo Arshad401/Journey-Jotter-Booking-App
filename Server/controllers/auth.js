@@ -43,7 +43,7 @@ export const login = async (req, res, next) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ ...otherDetails });
+      .json({ details:{...otherDetails}, isAdmin });
   } catch (err) {
     next(err);
   }
@@ -56,12 +56,11 @@ export const google = async (req, res, next)=>{
       const token = jwt.sign(
         { id: user._id},process.env.JWT_TOKEN);
         const { password: pass, ...rest } = user._doc 
-        res
-      .cookie("access_token", token, {
-        httpOnly: true,})
-        .status(200)
-        .json({success:"loginsucess",
+        res.cookie("access_token", token, {
+        httpOnly: true,}
+        ).status(200).json({success:"loginsucess",
           rest});
+  
     }else{
        const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
        const hashedPassword = bcrypt.hashSync(generatedPassword, 10);

@@ -47,7 +47,7 @@ export const getHotels = async (req, res, next) => {
   try {
     const hotels = await Hotel.find({
       ...others, 
-      cheapestPrice:{ $gt: min | 1, $lt: max || 1001},
+      cheapestPrice:{ $gt: min | 1, $lt: max || 2000000},
     }).limit(req.query.limit);
     res.status(200).json(hotels);
   } catch (err) {
@@ -104,5 +104,19 @@ export const getHotelRooms = async (req,res,next) =>{
   } catch (err) {
     next (err)
     
+  }
+}
+
+
+export const getAllHotel = async (req,res,next) =>{
+  try {
+    const hotels = await Hotel.find();
+    if (!hotels){
+      return res.status(404).json({status:false,message:"hotels not found"})
+    }
+
+    return res.status(200).json({status:true,message:"hotel found successfully",hotels})
+  } catch (error) {
+    next (error)
   }
 }

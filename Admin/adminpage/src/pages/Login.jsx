@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import GoogleAuth from "../components/GoogleAuth";
+
 
 
 
@@ -25,10 +25,17 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("/api/auth/login", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      toast.success("Login Successfully")
-      navigate("/");
+      const res = await axios.post("http://localhost:9900/api/auth/login", credentials);
+      if (res.data.isAdmin){
+
+          dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details});
+          toast.success("Login Successfully")
+          navigate("/");
+          console.log(res.data.details);
+        }else {
+            dispatch({ type: "LOGIN_FAILURE", payload: {message: "Your not Allowed"} });
+            toast.error("invalid user",error.response.data )
+        }
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
       toast.error("invalid user",error.response.data )
@@ -57,7 +64,6 @@ const Login = () => {
         <button disabled={loading} onClick={handleClick} className="lButton">
           Login
         </button>
-        <GoogleAuth />
         {error && <span>{error.message}</span>}
       </div>
     </div>
