@@ -4,15 +4,17 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-
 import Home from "./pages/Home";
 import Users from "./pages/Users";
 import Hotels from "./pages/Hotels";
 import ShowHotels from "./pages/ShowHotels";
-import { useContext } from "react";
+import { useContext, } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Login from "./pages/Login";
 import "./App.css";
+import CreateRoom from "./pages/CreateRoom";
+import ShowRooms from "./pages/ShowRooms";
+
 
 function App() {
   const ProtectRoute = ({ children }) => {
@@ -24,8 +26,10 @@ function App() {
     return children;
   };
 
+
   return (
     <div>
+     
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -39,12 +43,15 @@ function App() {
           />
 
           <Route element={<Home />}>
-            <Route path="/users" element={<Users />} />
-            <Route path="/hotels" element={<Hotels />} />
-            <Route path="/Showhotels" element={<ShowHotels />} />
+            <Route path="/users" element={<ProtectRoute><Users /></ProtectRoute>} />
+            <Route path="/hotels" element={<ProtectRoute><Hotels /></ProtectRoute>} />
+            <Route path="/Showhotels" element={<ProtectRoute><ShowHotels /></ProtectRoute>} />
+            <Route path="/createroom" element={<ProtectRoute><CreateRoom /></ProtectRoute>} />
+            <Route path="/showrooms" element={<ProtectRoute><ShowRooms/></ProtectRoute>} />
           </Route>
         </Routes>
       </BrowserRouter>
+   
     </div>
   );
 }

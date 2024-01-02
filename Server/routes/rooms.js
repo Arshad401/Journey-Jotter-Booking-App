@@ -8,7 +8,7 @@ const router = express.Router();
 
 //CREATE
 
-router.post("/:hotelid", verifyAdmin, createRoom);
+router.post("creatroom/:hotelid", verifyAdmin, createRoom);
 
 //UPDATE
 

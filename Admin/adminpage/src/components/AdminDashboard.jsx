@@ -28,6 +28,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
 
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -82,11 +83,11 @@ export default function AdminDashboard() {
   const handleUsersButtonClick = () => {
     navigate('/users');
   };
-  const handleDashButtonClick = () => {
-    // navigate('/hotels');
+  const handleshowroomsClick = () => {
+    navigate('/showrooms');
   };
-  const handleallcarsbuttonClick = () => {
-    // navigate ('/hotels')
+  const handlecreateroomClick = () => {
+    navigate ('/createroom')
   }
   const handlehotelbuttonClick = () => {
     navigate ('/hotels')
@@ -165,12 +166,12 @@ export default function AdminDashboard() {
             <ListSubheader component="div" inset>
               Users Side
             </ListSubheader>
-            <ListItemButton onClick={handleDashButtonClick}>
+            {/* <ListItemButton onClick={handleDashButtonClick}>
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
+              <ListItemText primary="Dashboard" /> */}
+            {/* </ListItemButton> */}
             <ListItemButton onClick={handleUsersButtonClick}>
               <ListItemIcon>
                 <PeopleIcon />
@@ -185,21 +186,33 @@ export default function AdminDashboard() {
             </ListItemButton>
             <ListItemButton  onClick={handlehotelshowbuttonClick}>
               <ListItemIcon>
-                <LayersIcon />
+                <LayersIcon  />
               </ListItemIcon>
               <ListItemText primary="Hotels" />
+            </ListItemButton>
+            <ListItemButton  onClick={handlecreateroomClick}>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="Create Rooms" />
+            </ListItemButton>
+            <ListItemButton  onClick={handleshowroomsClick}>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="Show Rooms" />
             </ListItemButton>
           </List>
           <Divider sx={{ my: 1 }} />
           <ListSubheader component="div" inset>
             Content
           </ListSubheader>
-          <ListItemButton onClick={handleallcarsbuttonClick}        >
+          {/* <ListItemButton onClick={handleallcarsbuttonClick}        >
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="View cars" />
-          </ListItemButton>
+          </ListItemButton> */}
           <ListItemButton >
             <ListItemIcon>
               <AdjustIcon/>

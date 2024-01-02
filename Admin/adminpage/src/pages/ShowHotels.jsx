@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./showhotels.css";
 import axios from "axios";
+import CreateRoom from "./CreateRoom";
 
 const ShowHotels = () => {
   const [showhotel, setShowHotel] = useState([]);
@@ -15,7 +16,7 @@ const ShowHotels = () => {
     };
     fetchShowHotel();
   }, []);
- 
+
   return (
     <div>
       {showhotel.map((item, index) => (
@@ -42,6 +43,8 @@ const ShowHotels = () => {
             <div className="siDetailTexts">
               <span className="siPrice">{item.price}</span>
               <span className="siTaxOp">Includes taxes and fees</span>
+
+              <CreateRoom hotelId={item._id} />
               <button className="siCheckButton">See availability</button>
             </div>
           </div>

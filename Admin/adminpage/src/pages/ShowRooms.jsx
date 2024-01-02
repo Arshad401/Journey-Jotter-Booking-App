@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import "./users.css";
-import axios from "axios";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -13,10 +10,12 @@ import Paper from "@mui/material/Paper";
 import Button from '@mui/material/Button';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#003580', 
-      color: theme.palette.common.white,
-  },
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: '#003580', 
+        color: theme.palette.common.white,
+    }
+    
+    ,
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
@@ -44,43 +43,31 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-export default function Users() {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:9900/api/users/getalluser"
-        );
-        setUsers(res.data);
-      } catch (error) {}
-    };
-    fetchUser();
-  }, []);
-  console.log(users);
+export default function showrooms() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-          
-            <StyledTableCell>AVATAR</StyledTableCell>
-            <StyledTableCell>NAME</StyledTableCell>
-            <StyledTableCell align="center">EMAIL</StyledTableCell>
-            <StyledTableCell>ACTION</StyledTableCell>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell align="right">TITLES</StyledTableCell>
+            <StyledTableCell align="right">DESCRIPTION</StyledTableCell>
+            <StyledTableCell align="right">PRICE</StyledTableCell>
+            <StyledTableCell align="right">MAX-PEOPLE</StyledTableCell>
+            <StyledTableCell align="right">ACTION</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
-            <StyledTableRow key={user.id}>
-              <StyledTableCell align="left">
-                <img src={user.avatar} style={{ width: '50px', height: '50px',borderRadius: '50%' }} alt="User Avatar" />
-              </StyledTableCell>
+          {rows.map((row) => (
+            <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {user.username}
+                {row.name}
               </StyledTableCell>
-              <StyledTableCell align="center">{user.email}</StyledTableCell>
-              <StyledTableCell align="left">
+              <StyledTableCell align="right">{row.calories}</StyledTableCell>
+              <StyledTableCell align="right">{row.fat}</StyledTableCell>
+              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">
                 <Button variant="outlined" color="error">
                   DELETE
                 </Button>
