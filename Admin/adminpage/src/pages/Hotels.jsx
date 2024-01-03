@@ -184,3 +184,4 @@ console.log(formData);
 };
 
 export default Hotels;
+

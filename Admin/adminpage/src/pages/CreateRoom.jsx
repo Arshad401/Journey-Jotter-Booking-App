@@ -1,12 +1,13 @@
-import * as React from "react";
+
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import axios from "axios"
+import axios from "axios";
+import { useState } from "react";
 
-export default function CreateRoom({hotelId}) {
-  const [open, setOpen] = React.useState(false);
+export default function CreateRoom({ hotelId }) {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -14,33 +15,29 @@ export default function CreateRoom({hotelId}) {
     setOpen(false);
   };
 
-  const [formdata, setFormData] = React.useState({
-    title: "",
-    price: "",
-    maxPeople: "",
-    description: "",
-    roomNumbers: {},
-  });
+
+  const [info, setInfo] = useState({});
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formdata, [id]: value });
+    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
+ 
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const res = await axios.post(
-        `http://localhost:9900/api/rooms/creatroom/${hotelId}`,
-        formdata
+      await axios.post(`http://localhost:9900/api/rooms/${hotelId}/createroom`, { ...info,},
+      {withCredentials:true}
       );
-    //   handleClose();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
+      handleClose()
+    } catch (err) {
+      console.log(err);
     }
   };
 
+  console.log(info)
   return (
     <div>
       <Button onClick={handleOpen} variant="contained">
@@ -53,7 +50,6 @@ export default function CreateRoom({hotelId}) {
         aria-describedby="modal-modal-description"
       >
         <Box
-          component="form"
           sx={{
             "& .MuiTextField-root": { m: 1, width: "50ch" },
             position: "absolute",
@@ -70,78 +66,80 @@ export default function CreateRoom({hotelId}) {
           }}
           noValidate
           autoComplete="off"
-          onSubmit={handleSubmit}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <h1 style={{ textAlign: "center" }}>Add Rooms</h1>
-            <TextField
-              onChange={handleChange}
-              id="title"
-              label="Title"
-              multiline
-              maxRows={4}
-              value={formdata.title}
-            />
-            <TextField
-              onChange={handleChange}
-              id="price"
-              label="Price"
-              placeholder="price"
-              multiline
-              value={formdata.price}
-            />
-            <TextField
-              onChange={handleChange}
-              id="description"
-              label="Description"
-              multiline
-              rows={4}
-              value={formdata.description}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TextField
-              onChange={handleChange}
-              id="roomNumbers"
-              label="Rooms"
-              multiline
-              maxRows={4}
-              variant="filled"
-              value={formdata.roomNumbers}
-            />
-            <TextField
-              onChange={handleChange}
-              id="maxPeople"
-              label="Max People"
-              placeholder="max no of people"
-              multiline
-              variant="filled"
-              value={formdata.maxPeople}
-            />
-          </div>
-          <Button
-            variant="contained"
-            disableElevation
-            style={{ marginTop: "20px", position: "relative", left: "415px" }}
-            type="submit"
-          >
-            Create
-          </Button>
-          
+          <form onSubmit={handleSubmit}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h1 style={{ textAlign: "center" }}>Add Rooms</h1>
+
+              <TextField
+                onChange={handleChange}
+                id="title"
+                label="Title"
+                multiline
+                maxRows={4}
+                value={info.title}
+              />
+              <TextField
+                onChange={handleChange}
+                id="price"
+                label="Price"
+                placeholder="price"
+                multiline
+                value={info.price}
+              />
+              <TextField
+                onChange={handleChange}
+                id="description"
+                label="Description"
+                multiline
+                rows={4}
+                value={info.description}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <TextField
+                onChange={handleChange}
+                id="roomNumbers"
+                label="Rooms"
+                multiline
+                maxRows={4}
+                variant="filled"
+                value={info.roomNumbers}
+              />
+              <TextField
+                onChange={handleChange}
+                id="maxPeople"
+                label="Max People"
+                placeholder="max no of people"
+                multiline
+                variant="filled"
+                value={info.maxPeople}
+              />
+            </div>
+            <Button
+              variant="contained"
+              disableElevation
+              style={{ marginTop: "20px", position: "relative", left: "415px" }}
+              type="button"
+              onClick={handleSubmit} 
+            >
+              Create
+            </Button>
+          </form>
         </Box>
       </Modal>
     </div>

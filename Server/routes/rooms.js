@@ -8,12 +8,12 @@ const router = express.Router();
 
 //CREATE
 
-router.post("creatroom/:hotelid", verifyAdmin, createRoom);
+router.post("/:id/createroom",verifyAdmin, createRoom);
 
 //UPDATE
 
 router.put("/:id", verifyAdmin, updateRoom );
-router.put("/availability/:id",  updateRoomAvailability );
+router.put("/:id/availability",  updateRoomAvailability );
 
 //DELETE
 

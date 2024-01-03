@@ -8,6 +8,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from '@mui/material/Button';
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -44,6 +47,27 @@ const rows = [
 ];
 
 export default function showrooms() {
+
+const [rooms, setRooms] = useState([]);
+
+
+useEffect(() => {
+  const fetchrooms = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:9900/api/rooms"
+      );
+      setRooms(res.data);
+      console.log(res.data)
+     
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchrooms();
+}, []);
+ console.log("room:",rooms)
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -57,16 +81,17 @@ export default function showrooms() {
             <StyledTableCell align="right">ACTION</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+        <TableBody >
+          {rooms.map((room) => (
+            <StyledTableRow key={room._id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {room._id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{room.title}</StyledTableCell>
+              <StyledTableCell align="right">{room.description}</StyledTableCell>
+              <StyledTableCell align="right">{room.price}</StyledTableCell>
+              <StyledTableCell align="right">{room.maxPeople}</StyledTableCell>
+              {/* <StyledTableCell align="right">{room.roomNumbers}</StyledTableCell> */}
               <StyledTableCell align="right">
                 <Button variant="outlined" color="error">
                   DELETE

@@ -31,7 +31,8 @@ const Login = () => {
           dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details});
           toast.success("Login Successfully")
           navigate("/");
-          console.log(res.data.details);
+          
+
         }else {
             dispatch({ type: "LOGIN_FAILURE", payload: {message: "Your not Allowed"} });
             toast.error("invalid user",error.response.data )
