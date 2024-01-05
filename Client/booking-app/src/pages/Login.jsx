@@ -58,6 +58,7 @@ const Login = () => {
           Login
         </button>
         <GoogleAuth />
+        <p>Doesn't have an account? <span className="signup-btn" onClick={()=>navigate("/signup")}>Signup</span></p>
         {error && <span>{error.message}</span>}
       </div>
     </div>

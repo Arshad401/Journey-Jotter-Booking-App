@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import "./showhotels.css";
 import axios from "axios";
 import CreateRoom from "./CreateRoom";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 const ShowHotels = () => {
   const [showhotel, setShowHotel] = useState([]);
@@ -45,7 +47,10 @@ const ShowHotels = () => {
               <span className="siTaxOp">Includes taxes and fees</span>
 
               <CreateRoom hotelId={item._id} />
-              <button className="siCheckButton">See availability</button>
+              {/* <button className="siCheckButton">Delete Hotel</button> */}
+              <Stack spacing={2} direction="row">
+              <Button variant="contained">Delete Hotel</Button>
+              </Stack>
             </div>
           </div>
         </div>

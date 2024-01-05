@@ -11,9 +11,11 @@ function Navbar() {
   const { user ,loading, dispatch} = useContext(AuthContext)
 
   const handleLogOut = ()=>{
-  dispatch({ type: "LOGOUT" })
-  navigate('/signup')
-  toast.success("logout successfully")
+    if(window.confirm("Are you sure to logout?")){
+      dispatch({ type: "LOGOUT" })
+      navigate('/')
+      toast.success("logout successfully")
+    }
   }
 
   // console.log(user)

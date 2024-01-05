@@ -63,6 +63,7 @@ const navigate=useNavigate()
           Register
         </button>
         <GoogleAuth />
+      <p>already have an account? <span className="signin-btn" onClick={()=>navigate("/login")}>SignIn</span></p>
       </div>
     </div>
   );

@@ -34,6 +34,7 @@ function dayDifference(date1, date2) {
   return diffDays;
 }
 
+
 const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
   

@@ -47,6 +47,11 @@
     cursor: not-allowed;
   }
 
+  .signup-btn{
+    color:#003580;
+    cursor: pointer;
+  }
+
   .googleBtn{
     border: none;
     padding: 10px 20px;

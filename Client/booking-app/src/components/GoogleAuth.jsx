@@ -5,6 +5,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaGoogle } from "react-icons/fa";
 
 
 const GoogleAuth = () => {
@@ -49,7 +50,9 @@ const GoogleAuth = () => {
   return (
     <div>
       <button onClick={handleGoogleClick} className="googleBtn" type="button">
-        Continue With Google
+      <FaGoogle className="google-icon"/>
+      <p>Continue With Google</p>
+      
       </button>
     </div>
   );

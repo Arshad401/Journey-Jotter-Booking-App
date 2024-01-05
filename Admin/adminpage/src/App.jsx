@@ -14,10 +14,12 @@ import Login from "./pages/Login";
 import "./App.css";
 import CreateRoom from "./pages/CreateRoom";
 import ShowRooms from "./pages/ShowRooms";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
-  const ProtectRoute = ({ children }) => {
+   const ProtectRoute = ({ children }) => {
     const { user } = useContext(AuthContext);
 
     if (!user) {
@@ -29,7 +31,7 @@ function App() {
 
   return (
     <div>
-     
+     <ToastContainer />
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />

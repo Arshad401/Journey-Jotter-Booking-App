@@ -13,7 +13,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.2",
-    "@mui/material": "^5.15.2",
+    "@mui/material": "^5.15.3",
     "axios": "^1.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,5 +31,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "vite": "^5.0.8"
-  },"proxy":"http://localhost:9900/api"
+  },
+  "proxy": "http://localhost:9900/api"
 }

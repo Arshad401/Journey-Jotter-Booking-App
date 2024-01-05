@@ -38,6 +38,10 @@
   margin-top: 15px;
   height: 50px;
 }
+.signin-btn{
+  color: #0071c2;
+  cursor: pointer;
+}
 
 
 /* .googleBtn{

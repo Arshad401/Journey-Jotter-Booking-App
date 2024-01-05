@@ -24,6 +24,13 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { toast } from "react-toastify";
+
+
+
+ 
 
 
 
@@ -80,6 +87,12 @@ const defaultTheme = createTheme();
 export default function AdminDashboard() {
   const navigate = useNavigate();
 
+  const { dispatch} = useContext(AuthContext)
+
+  
+
+
+ 
   const handleUsersButtonClick = () => {
     navigate('/users');
   };
@@ -101,6 +114,10 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = () => {
+    dispatch({ type: "LOGOUT" })
+    navigate('/login')
+    toast.success("logout successfully")
+    
 
   }
 
@@ -136,7 +153,7 @@ export default function AdminDashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Admin Dashboard
+              JourneyJotter Admin Dashboard
             </Typography>
             <IconButton color="inherit">
             
@@ -164,7 +181,6 @@ export default function AdminDashboard() {
           <Divider />
           <List component="nav">
             <ListSubheader component="div" inset>
-              Users Side
             </ListSubheader>
             {/* <ListItemButton onClick={handleDashButtonClick}>
               <ListItemIcon>
@@ -205,7 +221,7 @@ export default function AdminDashboard() {
           </List>
           <Divider sx={{ my: 1 }} />
           <ListSubheader component="div" inset>
-            Content
+            
           </ListSubheader>
           {/* <ListItemButton onClick={handleallcarsbuttonClick}        >
             <ListItemIcon>
@@ -213,12 +229,12 @@ export default function AdminDashboard() {
             </ListItemIcon>
             <ListItemText primary="View cars" />
           </ListItemButton> */}
-          <ListItemButton >
+          {/* <ListItemButton >
             <ListItemIcon>
               <AdjustIcon/>
             </ListItemIcon>
             <ListItemText primary="View Reports" />
-          </ListItemButton>
+          </ListItemButton> */}
         </Drawer>
         <Box
           component="main"

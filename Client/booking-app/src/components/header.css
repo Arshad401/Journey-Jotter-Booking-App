@@ -27,6 +27,15 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    transition: .2s;
+}
+.headerListItem:hover{
+    color: #003580;
+    background-color: white;
+    border-radius: 2rem;
+    
 }
 
 .headerListItem.active{
