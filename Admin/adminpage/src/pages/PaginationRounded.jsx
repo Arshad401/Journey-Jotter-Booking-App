@@ -11,8 +11,8 @@ const PaginationRounded = ({ totalPages, currentPage, onPageChange }) => {
         page={currentPage}
         onChange={onPageChange}
         shape="rounded"
-        size="large" // Set the size to "large"
-        siblingCount={3} // Show more page items
+        size="large" 
+        siblingCount={3} 
       />
     </Stack>
   );

@@ -171,6 +171,7 @@ const Users = () => {
 
   return (
     <>
+    <h1 style={{color:"#003580"}}>Users</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>

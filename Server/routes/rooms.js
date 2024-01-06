@@ -13,7 +13,7 @@ router.post("/:id/createroom",verifyAdmin, createRoom);
 //UPDATE
 
 router.put("/:id", verifyAdmin, updateRoom );
-router.put("/:id/availability",  updateRoomAvailability );
+router.put("/availability/:id",  updateRoomAvailability );
 
 //DELETE
 

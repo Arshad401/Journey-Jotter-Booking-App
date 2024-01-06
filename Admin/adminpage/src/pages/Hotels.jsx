@@ -193,6 +193,7 @@ import TextField from '@mui/material/TextField';
 import "./hotels.css";
 import HotelImageUpload from '../components/HotelImageUpload';
 import axios from 'axios';
+import {toast} from "react-toastify"
 
 const Hotels = () => {
   const [files, setFiles] = useState([]);
@@ -223,14 +224,19 @@ const Hotels = () => {
     try {
       const res = await axios.post("http://localhost:9900/api/hotels/addhotel", formData);
       console.log(res);
-      alert("hotel created successfully");
+      
+      toast.success("hotel created successfully")
     } catch (error) {
-      console.log("error creating hotel", error);
-      alert("hotel created successfully");
+     toast.error("cannot create hotel")
     }
   };
 
   const handleImageUpload = () => {
+
+    if (!files || files.length === 0) {
+     toast.error("Please choose at least one image");
+      return;
+    }
     const promises = [];
 
     for (let i = 0; i < files.length; i++) {
@@ -243,11 +249,14 @@ const Hotels = () => {
           ...formData,
           HotelImageUpload: (formData.HotelImageUpload || []).concat(urls),
         });
-        alert("Images uploaded successfully");
+        toast.success("Images uploaded successfully")
+        
       })
       .catch((err) => {
-        console.error("Error uploading images:", err);
+       
+        toast.error("images not uploaded")
       });
+     
   };
 
   return (
@@ -258,10 +267,12 @@ const Hotels = () => {
       }}
     >
       <label>
+      <h1 style={{color:"#003580"}}>Create a Hotel</h1>
         Image:
         <input type="file" name="image" onChange={(e) => { setFiles(e.target.files) }} />
       </label>
-      <button onClick={() => { handleImageUpload() }}>Upload</button>
+  
+     < button onClick={() => { handleImageUpload() }}>Upload</button>
 
       <br />
 
@@ -333,16 +344,16 @@ const Hotels = () => {
           fullWidth
         />
 
-<TextField
+{/* <TextField
           label="Rooms"
           name="rooms"
           value={formData.rooms}
           onChange={handleChange}
           multiline
           fullWidth
-        />
+        /> */}
 
-        <button type="submit">Create Hotel</button>
+        <button type="submit" style={{ margin: "15px"}}>Create Hotel</button>
       </form>
     </Box>
   );

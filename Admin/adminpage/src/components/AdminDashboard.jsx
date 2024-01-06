@@ -27,6 +27,9 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from "react-toastify";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import VillaIcon from '@mui/icons-material/Villa';
+import KingBedIcon from '@mui/icons-material/KingBed';
 
 
 
@@ -89,19 +92,19 @@ export default function AdminDashboard() {
 
   const { dispatch} = useContext(AuthContext)
 
-  
-
-
- 
+  const handleDashButtonClick = () => {
+    navigate('/');
+  };
+   
   const handleUsersButtonClick = () => {
     navigate('/users');
   };
   const handleshowroomsClick = () => {
     navigate('/showrooms');
   };
-  const handlecreateroomClick = () => {
-    navigate ('/createroom')
-  }
+  // const handlecreateroomClick = () => {
+  //   navigate ('/createroom')
+  // }
   const handlehotelbuttonClick = () => {
     navigate ('/hotels')
   }
@@ -182,12 +185,12 @@ export default function AdminDashboard() {
           <List component="nav">
             <ListSubheader component="div" inset>
             </ListSubheader>
-            {/* <ListItemButton onClick={handleDashButtonClick}>
+             <ListItemButton onClick={handleDashButtonClick}>
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" /> */}
-            {/* </ListItemButton> */}
+               <ListItemText primary="Dashboard" /> 
+            </ListItemButton> 
             <ListItemButton onClick={handleUsersButtonClick}>
               <ListItemIcon>
                 <PeopleIcon />
@@ -196,25 +199,26 @@ export default function AdminDashboard() {
             </ListItemButton >
             <ListItemButton  onClick={handlehotelbuttonClick}>
               <ListItemIcon>
-                <LayersIcon />
+                <AccountBalanceIcon />
               </ListItemIcon>
               <ListItemText primary="CreateHotels" />
             </ListItemButton>
             <ListItemButton  onClick={handlehotelshowbuttonClick}>
               <ListItemIcon>
-                <LayersIcon  />
+                <VillaIcon />
               </ListItemIcon>
               <ListItemText primary="Hotels" />
             </ListItemButton>
-            <ListItemButton  onClick={handlecreateroomClick}>
+
+            {/* <ListItemButton  onClick={handlecreateroomClick}>
               <ListItemIcon>
                 <LayersIcon />
               </ListItemIcon>
               <ListItemText primary="Create Rooms" />
-            </ListItemButton>
+            </ListItemButton> */}
             <ListItemButton  onClick={handleshowroomsClick}>
               <ListItemIcon>
-                <LayersIcon />
+                <KingBedIcon />
               </ListItemIcon>
               <ListItemText primary="Show Rooms" />
             </ListItemButton>

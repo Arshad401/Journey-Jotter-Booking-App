@@ -30,6 +30,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
     transition: .2s;
+    color: white;
 }
 .headerListItem:hover{
     color: #003580;

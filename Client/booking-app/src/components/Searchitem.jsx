@@ -9,7 +9,7 @@ const Searchitem = ({item}) => {
         <h1 className="siTitle">{item.name}</h1>
         <span className="siDistance">{item.distance}</span>
         <span className="siTaxiOp">Free airport taxi</span>
-        <span className="siSubtitle"> Nilgiris offers accommodation with a garden</span>
+        <span className="siSubtitle">offers accommodation with a garden</span>
         <span className="siFeatures">{item.desc}</span>
         <span className="siCancelOp">Free cancellation</span>
         <span className="siCancelOpSubtitle"> you can cancel later, so lock in this great price</span>

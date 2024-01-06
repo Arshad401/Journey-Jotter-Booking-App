@@ -117,7 +117,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from '@mui/material/Button';
-import PaginationRounded from './PaginationRounded'; // Import the PaginationRounded component
+import PaginationRounded from './PaginationRounded'; 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -138,22 +138,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function Showrooms() {
   const [rooms, setRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // You can adjust the number of items per page
+  const itemsPerPage = 6; 
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -182,10 +170,11 @@ export default function Showrooms() {
 
   return (
     <>
-      <TableContainer component={Paper}>
+    <h1 style={{color:"#003580"}}>Rooms</h1>
+      <TableContainer component={Paper}>   
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
+       <TableHead>
+          <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell align="right">TITLES</StyledTableCell>
               <StyledTableCell align="right">DESCRIPTION</StyledTableCell>

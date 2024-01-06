@@ -39,11 +39,10 @@ export const updateRoomAvailability = async (req, res, next) => {
         $push: {
           "roomNumbers.$.unavailableDates": req.body.dates,
         },
-      }
+      },
     );
     res.status(200).json("Room status has been updated.");
   } catch (err) {
-    console.log(err.message);
     next(err);
   }
 };

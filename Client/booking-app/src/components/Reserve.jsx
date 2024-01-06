@@ -7,12 +7,13 @@ import { useContext } from "react";
 import { SearchContext } from "../context/SearchContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Reserve = ({ setOpen, hotelId }) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(`http://localhost:9900/api/hotels/room/${hotelId}`);
   const { dates } = useContext(SearchContext);
-  
+  console.log(data,"hjuj");
 
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -33,7 +34,7 @@ const Reserve = ({ setOpen, hotelId }) => {
   const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
 
   const isAvailable = (roomNumber) => {
-    const isFound = roomNumber.unavailableDates.some((date) =>
+     const isFound = roomNumber.unavailableDates.some((date) =>
       alldates.includes(new Date(date).getTime())
     );
 
@@ -64,6 +65,7 @@ const Reserve = ({ setOpen, hotelId }) => {
       );
       setOpen(false);
       navigate("/");
+      toast.success("your Room Reserved successfully")
     } catch (err) {}
   };
   return (

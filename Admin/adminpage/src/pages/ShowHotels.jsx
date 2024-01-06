@@ -21,9 +21,10 @@ const ShowHotels = () => {
 
   return (
     <div>
+      <h1 style={{color:"#003580"}}>Hotels</h1>
       {showhotel.map((item, index) => (
         <div key={index} className="searchItem">
-          <img src={item.HotelImageUpload} alt="" className="siImg" />
+          <img src={item.HotelImageUpload[0]} alt="" className="siImg" />
           <div className="siDesc">
             <h1 className="siTitle">{item.name}</h1>
             <span className="siDistance">{item.distance}</span>
@@ -59,3 +60,5 @@ const ShowHotels = () => {
   );
 };
 export default ShowHotels;
+
+

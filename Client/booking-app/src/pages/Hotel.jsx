@@ -73,7 +73,7 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
         <FontAwesomeIcon icon={faCircleXmark} className="close" onClick={()=>setOpen(false)} />
         <FontAwesomeIcon icon={faCircleArrowLeft} className="arrow" onClick={()=>handleMove("l")}  />
         <div className="sliderWrapper">
-          <img src={data.photos[slideNumber]} alt="" className="sliderImg" />
+          <img src={data.HotelImageUpload[slideNumber]} alt="" className="sliderImg" />
         </div>
         <FontAwesomeIcon icon={faCircleArrowRight} className="arrow" onClick={()=>handleMove("r")}  />
 
@@ -94,8 +94,8 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
             Book stay over ${data.cheapestPrice} at this property and get free airport taxi
           </span>
           <div className="hotelImages">
-            {data.photos?.map((photo,i) => (
-              <div className="hotelImageWrapper">
+            {data.HotelImageUpload?.map((photo,i) => (
+              <div className="hotelImageWrapper" key={i}>
                 <img onClick={()=>handleOpen(i)} src={photo} alt="" className="hotelImg" />
               </div>
             ))}

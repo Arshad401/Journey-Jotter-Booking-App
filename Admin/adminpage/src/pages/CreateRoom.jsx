@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 import { useState } from "react";
+import {toast} from "react-toastify"
 
 export default function CreateRoom({ hotelId }) {
   const [open, setOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function CreateRoom({ hotelId }) {
 
 
   const [info, setInfo] = useState({});
+  const [rooms, setRooms] = useState([]);
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -26,18 +28,20 @@ export default function CreateRoom({ hotelId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const roomNumbers = rooms.split(",").map((room) => ({ number: room }));
     try {
-      await axios.post(`http://localhost:9900/api/rooms/${hotelId}/createroom`, { ...info,},
+      await axios.post(`http://localhost:9900/api/rooms/${hotelId}/createroom`, { ...info,roomNumbers},
       {withCredentials:true}
       );
-      handleClose()
+      toast.success("Room Created SuccessFully")
+      handleClose();
+      
     } catch (err) {
-      console.log(err);
+      toast.error("cant create Rooms")
     }
   };
 
-  console.log(info)
+  // console.log(info)
   return (
     <div>
       <Button onClick={handleOpen} variant="contained">
@@ -112,9 +116,9 @@ export default function CreateRoom({ hotelId }) {
               }}
             >
               <TextField
-                onChange={handleChange}
+                onChange={(e) => setRooms(e.target.value)}
                 id="roomNumbers"
-                label="Rooms"
+                label="RoomNumber"
                 multiline
                 maxRows={4}
                 variant="filled"

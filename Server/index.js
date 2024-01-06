@@ -7,6 +7,7 @@ import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import morgan from "morgan";
 
 
 const app = express();
@@ -30,6 +31,7 @@ mongoose.connection.on("disconnected", () => {
 app.use (cors({ origin: ['http://localhost:5173','http://localhost:5174'],credentials: true}));
 app.use (cookieParser())
 app.use(express.json())
+app.use(morgan("dev"))
 
 app.use ("/api/auth", authRoute);
 app.use ("/api/users", usersRoute);
