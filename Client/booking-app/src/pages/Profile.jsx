@@ -10,18 +10,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
 import { AuthContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 
 
 const Profile = () => {
   const { user ,loading, dispatch} = useContext(AuthContext)
   return (
+   <>
+   <Navbar />
+   <Header type="list" />
     <div className="full">
       <div className="div-card">
       <div className="card">
         <div>
           <img
             className="avatar"
-            src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/06/06/15/Chris-Pratt.jpg"
+            src= {user.avatar}
             alt="User Avatar"
           />
           <div className="userdetails">
@@ -70,6 +75,7 @@ const Profile = () => {
       </div>
       </div>
     </div>
+    </>
   );
 };
 

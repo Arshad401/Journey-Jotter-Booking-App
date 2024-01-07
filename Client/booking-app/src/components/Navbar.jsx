@@ -28,8 +28,8 @@ function Navbar() {
         </Link>
      {user ? <div className="navuser">
       {user?.rest?.username|| user.username} 
+     <img onClick={()=>navigate("/profile")} className="new-avatar" src= {user.avatar} alt="Profile" />
      <button className="logoutBtn"  disabled={loading} onClick={handleLogOut}>Logout</button>
-     <img className="new-avatar" src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/06/06/15/Chris-Pratt.jpg" alt="Profile" />
      </div>: (  
         <div className="navItems"> 
         <Link to={"/signup"}> 

@@ -68,6 +68,7 @@ cursor: not-allowed;
     border-radius:50%;
     margin-top: 1px;
     object-fit: cover;
-    height:3vh;
-    width:3vh;
+    height:3.5vh;
+    width:3.5vh;
+    cursor: pointer;
 }

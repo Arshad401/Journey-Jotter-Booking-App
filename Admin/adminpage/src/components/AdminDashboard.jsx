@@ -122,11 +122,10 @@ export default function AdminDashboard() {
   }
 
   return (
-   
+    
       <><ThemeProvider theme={defaultTheme}>
       
       <Box sx={{ display: 'flex' }}>
-     
         <CssBaseline />
         <AppBar position="absolute" sx={{ backgroundColor: "#003580" }} open={open}>
           <Toolbar
@@ -187,7 +186,7 @@ export default function AdminDashboard() {
                 <DashboardIcon />
               </ListItemIcon>
                <ListItemText primary="Dashboard" /> 
-            </ListItemButton> 
+               </ListItemButton> 
             <ListItemButton onClick={handleUsersButtonClick}>
               <ListItemIcon>
                 <PeopleIcon />
