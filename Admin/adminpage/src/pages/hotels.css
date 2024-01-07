@@ -1,4 +1,4 @@
-/* Style for the form container */
+
 form {
     max-width: 600px;
     margin: 0 auto;
@@ -8,13 +8,13 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Style for form labels */
+  
   label {
     display: block;
     margin-bottom: 8px;
   }
   
-  /* Style for form inputs and textarea */
+  
   input,
   textarea {
     width: 100%;
@@ -23,12 +23,12 @@ form {
     box-sizing: border-box;
   }
   
-  /* Style for file input */
+  
   input[type="file"] {
     margin-top: 5px;
   }
   
-  /* Style for submit button */
+
   button {
     background-color: #007bff;
     color: white;

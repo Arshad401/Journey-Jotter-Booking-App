@@ -21,15 +21,15 @@ const Profile = () => {
         <div>
           <img
             className="avatar"
-            src="https://placekitten.com/150/150"
+            src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/06/06/15/Chris-Pratt.jpg"
             alt="User Avatar"
           />
           <div className="userdetails">
-            <h2>{user?.rest?.username|| user.username}</h2>
+            <h2 className="change-c">{user?.rest?.username|| user.username}</h2>
             <p>{user?.rest?.email|| user.email}</p>
           </div>
           <div>
-            <h2 className="">Your Recent Bookings:</h2>
+            <h2 className="change-c">Your Recent Bookings:</h2>
             <div className="cardicon">
               <div className="cardListItem">
                 <FontAwesomeIcon icon={faBed} />
@@ -54,17 +54,17 @@ const Profile = () => {
         <h2 className="prohead">Profile Page</h2>
         <div className="disabledFields">
           <label >
-            <span >Username </span>
-             <input  type="username" placeholder="" disabled  />
+            <span className="wrote">Username </span>
+             <input  type="username" placeholder={user.username}disabled  />
              
           </label>
           <label>
-            <span>email</span>
-            <input type="email" placeholder=""disabled />
+            <span className="wrote">email</span>
+            <input type="email" placeholder= {user.email} disabled />
           </label>
           <label>
-            <span>user Joined</span>
-            <input type="text" placeholder="Field 3" disabled />
+            <span className="wrote">user Joined</span>
+            <input type="text" placeholder="" disabled />
           </label>
         </div>
       </div>

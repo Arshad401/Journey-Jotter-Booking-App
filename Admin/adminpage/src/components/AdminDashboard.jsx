@@ -102,9 +102,6 @@ export default function AdminDashboard() {
   const handleshowroomsClick = () => {
     navigate('/showrooms');
   };
-  // const handlecreateroomClick = () => {
-  //   navigate ('/createroom')
-  // }
   const handlehotelbuttonClick = () => {
     navigate ('/hotels')
   }
@@ -209,13 +206,6 @@ export default function AdminDashboard() {
               </ListItemIcon>
               <ListItemText primary="Hotels" />
             </ListItemButton>
-
-            {/* <ListItemButton  onClick={handlecreateroomClick}>
-              <ListItemIcon>
-                <LayersIcon />
-              </ListItemIcon>
-              <ListItemText primary="Create Rooms" />
-            </ListItemButton> */}
             <ListItemButton  onClick={handleshowroomsClick}>
               <ListItemIcon>
                 <KingBedIcon />
@@ -227,18 +217,7 @@ export default function AdminDashboard() {
           <ListSubheader component="div" inset>
             
           </ListSubheader>
-          {/* <ListItemButton onClick={handleallcarsbuttonClick}        >
-            <ListItemIcon>
-              <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="View cars" />
-          </ListItemButton> */}
-          {/* <ListItemButton >
-            <ListItemIcon>
-              <AdjustIcon/>
-            </ListItemIcon>
-            <ListItemText primary="View Reports" />
-          </ListItemButton> */}
+          
         </Drawer>
         <Box
           component="main"
