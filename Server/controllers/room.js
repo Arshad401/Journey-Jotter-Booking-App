@@ -1,9 +1,12 @@
 import Room from "../models/Room.js";
 import Hotel from "../models/Hotel.js";
+import Users from "../models/Users.js";
+import Reservation from "../models/Reservation.js";
+import { response } from "express";
 
 export const createRoom = async (req, res, next) => {
   const hotelId = req.params.id;
-  const newRoom =await Room.create(req.body);
+  const newRoom = await Room.create(req.body);
 
   try {
     const savedRoom = await newRoom.save();
@@ -18,30 +21,63 @@ export const createRoom = async (req, res, next) => {
   }
 };
 
-export const updateRoom = async (req, res, next) => {
+// export const updateRoom = async (req, res, next) => {
+//   try {
+//     const updatedRoom = await Room.findByIdAndUpdate(
+//       req.params.id,
+//       { $set: req.body },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedRoom);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+export const updateRoomAvailability = async (req, res, next) => {
+  const { id: roomId } = req.params;
+  const { dates, hotelName } = req.body;
   try {
-    const updatedRoom = await Room.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
+    const room = await Room.findOne({ "roomNumbers._id": roomId });
+    await Room.updateOne(
+      { "roomNumbers._id": roomId },
+      {
+        $push: {
+          "roomNumbers.$.unavailableDates": dates,
+        },
+      }
     );
-    res.status(200).json(updatedRoom);
+
+    console.log("roomID", room);
+
+    const reservation = await Reservation.create({
+      userId: req.user.id,
+      hotelName,
+      roomId: room._id,
+    });
+
+    const user = await Users.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        $push: {
+          reservedHotels: reservation,
+        },
+      }
+    );
+
+    res.status(200).json({ message: "Room status has been updated." });
   } catch (err) {
     next(err);
   }
 };
-
-export const updateRoomAvailability = async (req, res, next) => {
+export const getUserReservations = async (req, res, next) => {
   try {
-    await Room.updateOne(
-      { "roomNumbers._id": req.params.id },
-      {
-        $push: {
-          "roomNumbers.$.unavailableDates": req.body.dates,
-        },
-      },
-    );
-    res.status(200).json("Room status has been updated.");
+    const userReservations = await Reservation.find({
+      userId: req.user.id,
+    }).populate("roomId");
+
+    console.log(userReservations);
+    res.status(200).json({ reservations: userReservations });
   } catch (err) {
     next(err);
   }
@@ -79,5 +115,37 @@ export const getRooms = async (req, res, next) => {
     res.status(200).json(rooms);
   } catch (err) {
     next(err);
+  }
+};
+
+export const cancelReservation = async (req, res, next) => {
+  const data = req.body;
+
+  try {
+    const room = await Room.findById(data.roomId);
+    const roomNumbers = room.roomNumbers.map(
+      (item) => (item.unavailableDates = [])
+    );
+    await Room.findByIdAndUpdate(data.roomId, {
+      $set: {
+        roomNumbers,
+      },
+    });
+
+   
+
+    const user = await Users.findByIdAndUpdate(data.userId, {
+      $pull: {
+        reservedHotels: data.reservationId,
+      },
+    });
+
+    await Reservation.findByIdAndDelete(data.reservationId);
+
+    res.status(200).json({
+      message: "success",
+    });
+  } catch (error) {
+    next(error);
   }
 };

@@ -43,3 +43,25 @@ export const getUsers = async (req, res, next) => {
 };
 
 
+export const editAvatar = async (req, res) => {
+  const { Avatar } = req.body;
+  const id = req.params.id;
+  const user = await Users.findOne({ _id: id });
+  if (user) {
+    await Users.findByIdAndUpdate(id, {
+      $set: {
+        avatar: Avatar,
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      message: "Avatar updated successfully",
+      data: user,
+    });
+  } else {
+    res.status(500).json({
+      status: "error",
+      message: "updating avatar failed",
+    });
+  }
+};

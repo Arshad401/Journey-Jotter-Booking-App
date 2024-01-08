@@ -9,11 +9,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Reserve = ({ setOpen, hotelId }) => {
+const Reserve = ({ setOpen, hotelId ,hotelName}) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(`http://localhost:9900/api/hotels/room/${hotelId}`);
   const { dates } = useContext(SearchContext);
-  console.log(data,"hjuj");
+  // const { dispatch } = useContext(AuthContext);
+   
 
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -59,6 +60,7 @@ const Reserve = ({ setOpen, hotelId }) => {
         selectedRooms.map((roomId) => {
           const res = axios.put(`/api/rooms/availability/${roomId}`, {
             dates: alldates,
+            hotelName
           });
           return res.data;
         })

@@ -4,7 +4,7 @@
   justify-content: space-around;
   width: 100rem;
   height: 40rem;
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-left: 3rem;
   border-radius: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -93,4 +93,20 @@ label {
   font-size: 40px;
   font-weight: bold;
   color: #003580;
+}
+.add-photo{
+  font-size: 3rem;
+  position: relative;
+  right: 4rem;
+  color:  #003580;
+  bottom: 1rem;
+  cursor: pointer;
+}
+
+.upload-button{
+  background-color: #003580;
+  color: aliceblue;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
 }

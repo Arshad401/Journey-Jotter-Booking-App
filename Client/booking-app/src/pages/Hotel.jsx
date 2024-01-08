@@ -123,7 +123,7 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate);
         <Footer />
       </div>}
 
-      {openmodel && <Reserve setOpen={setOpenModel} hotelId={id}/>}
+      {openmodel && <Reserve setOpen={setOpenModel} hotelId={id} hotelName={data.name}/>}
     </div>
   );
 }

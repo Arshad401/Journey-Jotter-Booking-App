@@ -1,6 +1,6 @@
 import express from "express";
-import { createRoom, deleteRoom, getRoom, getRooms, updateRoom, updateRoomAvailability } from "../controllers/room.js";
-import { verifyAdmin } from "../utils/verifyToken.js";
+import { cancelReservation, createRoom, deleteRoom, getRoom, getRooms, getUserReservations, updateRoomAvailability } from "../controllers/room.js";
+import { verifyAdmin, verifyToken } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
@@ -12,8 +12,10 @@ router.post("/:id/createroom",verifyAdmin, createRoom);
 
 //UPDATE
 
-router.put("/:id", verifyAdmin, updateRoom );
-router.put("/availability/:id",  updateRoomAvailability );
+// router.put("/:id", verifyAdmin, updateRoom );
+router.put("/availability/:id", verifyToken, updateRoomAvailability );
+router.get("/getreservation", verifyToken, getUserReservations );
+router.put("/cancelreservation", verifyToken, cancelReservation );
 
 //DELETE
 
