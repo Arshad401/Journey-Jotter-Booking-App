@@ -32,7 +32,6 @@ const ReservationModal = () => {
       try {
         const response = await axios.get("/api/rooms/getreservation");
         setReservedHotels(response.data.reservations);
-        // console.log(response.data.reservation);
       } catch (error) {
         console.error("Error fetching reservations:", error);
       }
@@ -40,19 +39,17 @@ const ReservationModal = () => {
 
     fetchReservations();
   }, []);
-
   console.log(reservedHotels);
 
   const handleCancelReservation = async (reservation) => {
-
     try {
       const data = {
         roomId: reservation.roomId._id,
         reservationId: reservation._id,
-        userId:reservation.userId
+        userId: reservation.userId,
       };
       const response = await axios.put("/api/rooms/cancelreservation", data);
-      toast.success("rservation cancelled");
+      toast.success("Reservation cancelled");
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +57,9 @@ const ReservationModal = () => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>View Reservations</Button>
+      <Button style={{ color: "#003580" }} onClick={handleOpen}>
+        <h2>View Reservation</h2>
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -80,12 +79,15 @@ const ReservationModal = () => {
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Room Numbers:{" "}
-                  {reservation.roomId.roomNumbers.map((element, i) => {
-                    return <h6 key={i}>{element.number}</h6>;
-                  })}
+                  {reservation.roomId.roomNumbers
+                    .filter((element) => element.unavailableDates.length > 0)
+                    .map((element, i) => (
+                      <h6 key={i}>{element.number}</h6>
+                    ))}
                 </Typography>
               </CardContent>
-              <Button onClick={()=> handleCancelReservation(reservation)}>
+              <Button onClick={() => {handleCancelReservation(reservation);
+              handleClose()}}>
                 cancelReservation
               </Button>
             </Card>

@@ -41,7 +41,6 @@ export default function Showrooms() {
       try {
         const res = await axios.get("http://localhost:9900/api/rooms");
         setRooms(res.data);
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }

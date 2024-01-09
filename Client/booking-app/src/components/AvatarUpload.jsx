@@ -2,7 +2,6 @@ import axios from "axios";
 
 const AvatarUpload = async (file) => {
   const data = new FormData();
-//   console.log("this is data",data);
   data.append("file", file);
   console.log(file);
   data.append("upload_preset", "Avatar");

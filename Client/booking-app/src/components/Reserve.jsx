@@ -13,9 +13,9 @@ const Reserve = ({ setOpen, hotelId ,hotelName}) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(`http://localhost:9900/api/hotels/room/${hotelId}`);
   const { dates } = useContext(SearchContext);
-  // const { dispatch } = useContext(AuthContext);
+  
    
-
+console.log(data);
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -53,6 +53,7 @@ const Reserve = ({ setOpen, hotelId ,hotelName}) => {
   };
 
   const navigate = useNavigate();
+  // console.log(selectedRooms);
 
   const handleClick = async () => {
     try {
@@ -60,7 +61,8 @@ const Reserve = ({ setOpen, hotelId ,hotelName}) => {
         selectedRooms.map((roomId) => {
           const res = axios.put(`/api/rooms/availability/${roomId}`, {
             dates: alldates,
-            hotelName
+            hotelName,
+            selectedRooms
           });
           return res.data;
         })
@@ -87,7 +89,6 @@ const Reserve = ({ setOpen, hotelId ,hotelName}) => {
               <div className="rMax">
                 Max people: <b>{item.maxPeople}</b>
               </div>
-              <div className="rPrice">{item.price}</div>
             </div>
             <div className="rSelectRooms">
               {item.roomNumbers.map((roomNumber) => (

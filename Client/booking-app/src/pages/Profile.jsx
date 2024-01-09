@@ -23,7 +23,7 @@ const Profile = () => {
   const { user,error,dispatch } = useContext(AuthContext);
   const fileRef = useRef(null);
   const [avatar, setavatar] = useState(null);
-  // console.log(user);
+ 
 
   const uploadavatar = async (e) => {
     setavatar(e.target.files[0]);

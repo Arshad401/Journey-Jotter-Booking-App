@@ -2,7 +2,7 @@ import Room from "../models/Room.js";
 import Hotel from "../models/Hotel.js";
 import Users from "../models/Users.js";
 import Reservation from "../models/Reservation.js";
-import { response } from "express";
+
 
 export const createRoom = async (req, res, next) => {
   const hotelId = req.params.id;
@@ -36,24 +36,26 @@ export const createRoom = async (req, res, next) => {
 
 export const updateRoomAvailability = async (req, res, next) => {
   const { id: roomId } = req.params;
-  const { dates, hotelName } = req.body;
+  const { dates, hotelName,selectedRooms } = req.body;
   try {
-    const room = await Room.findOne({ "roomNumbers._id": roomId });
+    const room = await Room.findOne({ "roomNumbers._id":selectedRooms });
+    // console.log(room);
     await Room.updateOne(
-      { "roomNumbers._id": roomId },
+      { "roomNumbers._id": selectedRooms },    //roomId changed
       {
         $push: {
+        
           "roomNumbers.$.unavailableDates": dates,
         },
       }
     );
 
-    console.log("roomID", room);
 
     const reservation = await Reservation.create({
       userId: req.user.id,
       hotelName,
       roomId: room._id,
+      selectedRooms    //added
     });
 
     const user = await Users.findOneAndUpdate(
@@ -74,9 +76,7 @@ export const getUserReservations = async (req, res, next) => {
   try {
     const userReservations = await Reservation.find({
       userId: req.user.id,
-    }).populate("roomId");
-
-    console.log(userReservations);
+    }).populate("roomId")
     res.status(200).json({ reservations: userReservations });
   } catch (err) {
     next(err);
@@ -123,12 +123,15 @@ export const cancelReservation = async (req, res, next) => {
 
   try {
     const room = await Room.findById(data.roomId);
-    const roomNumbers = room.roomNumbers.map(
-      (item) => (item.unavailableDates = [])
-    );
+    
+    const updatedRoomNumbers = room.roomNumbers.map((item) => {
+      item.unavailableDates = [];
+      return item;
+    });
+
     await Room.findByIdAndUpdate(data.roomId, {
       $set: {
-        roomNumbers,
+        roomNumbers: updatedRoomNumbers,
       },
     });
 

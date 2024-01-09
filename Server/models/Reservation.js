@@ -12,6 +12,11 @@ const ReservationSchema = new mongoose.Schema ({
      roomId:{
         type: mongoose.Schema.Types.ObjectId, ref: 'Room'
      },
+
+     //new
+     selectedRooms:{
+        type: mongoose.Schema.Types.ObjectId, ref: 'Room'
+     },
 },{timestamps:true}
 );
 

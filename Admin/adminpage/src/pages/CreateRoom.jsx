@@ -41,7 +41,6 @@ export default function CreateRoom({ hotelId }) {
     }
   };
 
-  // console.log(info)
   return (
     <div>
       <Button onClick={handleOpen} variant="contained">

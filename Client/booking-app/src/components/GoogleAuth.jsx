@@ -31,7 +31,6 @@ const GoogleAuth = () => {
         }),
       });
       const data = await res.json();
-      console.log(data);
     if(data.success==="loginsucess"){
       dispatch({ type: "LOGIN_SUCCESS", payload:data });
     

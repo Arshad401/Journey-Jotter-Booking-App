@@ -12,7 +12,7 @@ export const verifyToken = ( req,res,next ) => {
 jwt.verify(token, process.env.JWT_TOKEN, (err,user) =>{
     if (err) return next (createError (403, "token is not valid" ));
     req.user = user;
-    console.log("hi")
+    // console.log("hi")
     next()
 });    
 

@@ -35,7 +35,6 @@ const Hotels = () => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:9900/api/hotels/addhotel", formData);
-      console.log(res);
       
       toast.success("hotel created successfully")
     } catch (error) {
