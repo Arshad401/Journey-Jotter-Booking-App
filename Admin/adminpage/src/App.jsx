@@ -16,6 +16,8 @@ import CreateRoom from "./pages/CreateRoom";
 import ShowRooms from "./pages/ShowRooms";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Hotel from "./pages/HotelDetails";
+import Chart from "./components/Chart";
 
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
             <Route path="/Showhotels" element={<ProtectRoute><ShowHotels /></ProtectRoute>} />
             <Route path="/createroom" element={<ProtectRoute><CreateRoom /></ProtectRoute>} />
             <Route path="/showrooms" element={<ProtectRoute><ShowRooms/></ProtectRoute>} />
+            <Route path="/hoteldetails/:id" element={<ProtectRoute><Hotel/></ProtectRoute>} />
+            <Route path="/dash" element={<ProtectRoute><Chart/></ProtectRoute>} />
           </Route>
         </Routes>
       </BrowserRouter>

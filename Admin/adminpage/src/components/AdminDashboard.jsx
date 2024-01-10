@@ -30,6 +30,8 @@ import { toast } from "react-toastify";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import VillaIcon from '@mui/icons-material/Villa';
 import KingBedIcon from '@mui/icons-material/KingBed';
+import Chart from './Chart';
+
 
 
 
@@ -93,7 +95,7 @@ export default function AdminDashboard() {
   const { dispatch} = useContext(AuthContext)
 
   const handleDashButtonClick = () => {
-    navigate('/');
+    navigate('/dash');
   };
    
   const handleUsersButtonClick = () => {

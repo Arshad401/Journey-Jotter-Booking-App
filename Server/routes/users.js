@@ -1,6 +1,6 @@
 import express from "express";
 import { deleteUser, editAvatar, getUsers, updateUser } from "../controllers/user.js";
-import { verifyUser } from "../utils/verifyToken.js";
+import { verifyAdmin, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.put("/:id", verifyUser, updateUser );
 
 //DELETE
 
-router.delete("/:id", verifyUser, deleteUser );
+router.delete("/:id", verifyUser, verifyAdmin, deleteUser );
 
 //GET
 

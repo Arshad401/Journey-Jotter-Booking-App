@@ -61,16 +61,16 @@ function Header({ type }) {
           type === "list" ? "headerContainer listMode" : "headerContainer"
         }
       >
-        <div className="headerList">
-          <div className="headerListItem active">
+        <div className="headerList" >
+          <div className="headerListItem active" onClick={()=>navigate('/')}>
             <FontAwesomeIcon icon={faBed} />
             <span>Stays</span>
           </div>
-          <div className="headerListItem">
+          <div className="headerListItem" onClick={()=>navigate('/flights')}>
             <FontAwesomeIcon icon={faPlane} />
             <span>Flights</span>
           </div>
-          <div className="headerListItem">
+          <div className="headerListItem" onClick={()=>navigate('/carrentals')}>
             <FontAwesomeIcon icon={faCar} />
             <span>Car rentals</span>
           </div>
@@ -78,7 +78,7 @@ function Header({ type }) {
             <FontAwesomeIcon icon={faBed} />
             <span>Attractions</span>
           </div>
-          <div className="headerListItem">
+          <div className="headerListItem" onClick={()=>navigate('/airporttaxi')}>
             <FontAwesomeIcon icon={faTaxi} />
             <span>Airport taxis</span>
           </div>

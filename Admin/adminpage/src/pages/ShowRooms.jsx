@@ -10,7 +10,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from '@mui/material/Button';
-import PaginationRounded from './PaginationRounded'; 
+import PaginationRounded from './PaginationRounded';
+// import { toast } from "react-toastify"; 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,6 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function Showrooms() {
   const [rooms, setRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  // const [dlt, setDlt] = useState(false);
   const itemsPerPage = 6; 
 
   useEffect(() => {
@@ -59,6 +61,18 @@ export default function Showrooms() {
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
+
+  // const handleRoomDelete=async(id)=>{
+  //   try {
+  //     await axios.delete(`http://localhost:9900/api/rooms/${id}/${}`, {
+  //       withCredentials: true,
+  //     });
+  //     toast.success("Room deleted successfully");
+  //     setDlt(!dlt);
+  //   } catch (error) {
+  //     console.error("Error deleting Room:", error);
+  //   }
+  // }
 
   return (
     <>
@@ -86,7 +100,7 @@ export default function Showrooms() {
                 <StyledTableCell align="right">{room.price}</StyledTableCell>
                 <StyledTableCell align="right">{room.maxPeople}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <Button variant="outlined" color="error">
+                  <Button variant="outlined" color="error" onClick={()=>{}}>
                     DELETE
                   </Button>
                 </StyledTableCell>

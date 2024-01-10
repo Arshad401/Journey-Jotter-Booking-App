@@ -1,7 +1,5 @@
 import Users from "../models/Users.js";
 
-
-
 export const updateUser = async (req, res, next) => {
   try {
     const updatedUser = await Users.findByIdAndUpdate(
@@ -17,7 +15,7 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   try {
-    await Users.findByIdAndDelete(req.params.id);
+    await Users.findByIdAndUpdate(req.params.id, { $set: { isDeleted: true } });
     res.status(200).json("user has been deleted");
   } catch (err) {
     next(err);
@@ -35,13 +33,12 @@ export const deleteUser = async (req, res, next) => {
 
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await Users.find();
+    const users = await Users.find({ isDeleted: false });
     res.status(200).json(users);
   } catch (err) {
     next(err);
   }
 };
-
 
 export const editAvatar = async (req, res) => {
   const { Avatar } = req.body;
