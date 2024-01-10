@@ -125,7 +125,7 @@ export default function Chart() {
         {
           data: [
             { id: 0, value: 10, label: 'Users' },
-            { id: 1, value: 15, label: 'Hotels' },
+            { id: 1, value: 25, label: 'Hotels' },
             { id: 2, value: 20, label: 'Rooms' },
           ],
         },
