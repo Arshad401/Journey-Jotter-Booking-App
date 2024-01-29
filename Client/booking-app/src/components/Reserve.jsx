@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./reserve.css";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleXmark,
+  faPersonWalkingDashedLineArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../components/hooks/UseFetch.js";
 import { useState } from "react";
 import { useContext } from "react";
@@ -8,14 +11,20 @@ import { SearchContext } from "../context/SearchContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BookingContext } from "../context/BookingContext.jsx";
 
-const Reserve = ({ setOpen, hotelId ,hotelName}) => {
+const Reserve = ({ setOpen, hotelId, hotelName, hotelDetails }) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const { data, loading, error } = useFetch(`http://localhost:9900/api/hotels/room/${hotelId}`);
+  const { data, loading, error } = useFetch(
+    `http://localhost:9900/api/hotels/room/${hotelId}`
+  );
   const { dates } = useContext(SearchContext);
-  
-   
-console.log(data);
+  const { dispatch } = useContext(BookingContext);
+
+  console.log(hotelDetails, "hai");
+  // const currentHotel = hotelDetails;
+  // console.log(currentHotel);
+
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -35,8 +44,8 @@ console.log(data);
   const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
 
   const isAvailable = (roomNumber) => {
-     const isFound = roomNumber.unavailableDates.some((date) =>
-      alldates.includes(new Date(date).getTime())
+    const isFound = roomNumber.unavailableDates.some((date) =>
+      alldates.includes(new Date(date)?.getTime())
     );
 
     return !isFound;
@@ -57,20 +66,27 @@ console.log(data);
 
   const handleClick = async () => {
     try {
-      await Promise.all(
-        selectedRooms.map((roomId) => {
-          const res = axios.put(`/api/rooms/availability/${roomId}`, {
-            dates: alldates,
-            hotelName,
-            selectedRooms
-          });
-          return res.data;
-        })
-      );
+      const promises = selectedRooms.map(async (roomId) => {
+        const res = await axios.put(`/api/rooms/availability/${roomId}`, {
+          dates: alldates,
+          hotelName,
+          selectedRooms,
+        });
+        return res.data;
+      });
+
+      const results = await Promise.all(promises);
+
       setOpen(false);
-      navigate("/");
-      toast.success("your Room Reserved successfully")
-    } catch (err) {}
+      navigate("/payment");
+      toast.success(
+        "Your room has been reserved successfully. Please complete the payment to confirm the booking."
+      );
+
+      dispatch({ type: "BOOKING_SUCCESS", payload:{hotelDetails} });
+    } catch (error) {
+      console.error(error, "error");
+    }
   };
   return (
     <div className="reserve">
@@ -81,7 +97,7 @@ console.log(data);
           onClick={() => setOpen(false)}
         />
         <span>Select your rooms:</span>
-        {data ?.map((item) => (
+        {data?.map((item) => (
           <div className="rItem" key={item._id}>
             <div className="rItemInfo">
               <div className="rTitle">{item.title}</div>
@@ -92,7 +108,7 @@ console.log(data);
             </div>
             <div className="rSelectRooms">
               {item.roomNumbers.map((roomNumber) => (
-                <div className="room">
+                <div className="room" key={roomNumber._id}>
                   <label>{roomNumber.number}</label>
                   <input
                     type="checkbox"
@@ -105,7 +121,7 @@ console.log(data);
             </div>
           </div>
         ))}
-        <button onClick={()=>handleClick()} className="rButton">
+        <button onClick={() => handleClick()} className="rButton">
           Reserve Now!
         </button>
       </div>

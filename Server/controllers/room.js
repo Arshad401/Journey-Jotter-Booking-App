@@ -39,7 +39,7 @@ export const updateRoomAvailability = async (req, res, next) => {
   const { dates, hotelName,selectedRooms } = req.body;
   try {
     const room = await Room.findOne({ "roomNumbers._id":selectedRooms });
-    // console.log(room);
+
     await Room.updateOne(
       { "roomNumbers._id": selectedRooms },    //roomId changed
       {

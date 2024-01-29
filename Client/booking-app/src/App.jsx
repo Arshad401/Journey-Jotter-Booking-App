@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from "./pages/Profile";
 import ComingSoonPage from "./pages/ComingSoon";
+import Payment from "./components/Payment";
 
 function App() {
   
@@ -27,6 +28,7 @@ function App() {
       <Route path="/flights" element={<ComingSoonPage/>}/>
       <Route path="/carrentals" element={<ComingSoonPage/>}/>
       <Route path="/airporttaxi" element={<ComingSoonPage/>}/>
+      <Route path="/payment" element={<Payment/>}/>
     </Routes>
     </BrowserRouter>
     <ToastContainer />
