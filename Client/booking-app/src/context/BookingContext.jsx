@@ -41,6 +41,8 @@ const BookingReducer = (state, action) => {
 
 export const BookingContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(BookingReducer, INITIAL_STATE);
+  
+
 
   useEffect(() => {
     localStorage.setItem("booking", JSON.stringify(state.bookedHotels));

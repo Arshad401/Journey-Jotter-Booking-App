@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 import Card from "@mui/material/Card";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,46 +8,66 @@ import { SearchContext } from "../context/SearchContext";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { ReserveContext } from "../context/ReserveContext";
 
 const Payment = () => {
   const navigate = useNavigate();
-  const { bookedHotels } = useContext(BookingContext);
+  const { bookedHotels, dispatch } = useContext(BookingContext);
   const { dates } = useContext(SearchContext);
-  const { user} = useContext(AuthContext)
-  console.log(dates);
+  const { user } = useContext(AuthContext);
+  const { selectedRooms, setSelectedRooms } = useContext(ReserveContext);
 
-  console.log(bookedHotels?.hotelDetails, "ha");
 
-  const [reservation, setReservation] = useState();
+  const hotelName = bookedHotels?.hotelDetails?.name;
+  const totalPrice = bookedHotels?.hotelDetails?.cheapestPrice + 450;
 
-    const hotelName =bookedHotels?.hotelDetails?.name;
-    const totalPrice =bookedHotels?.hotelDetails?.cheapestPrice+450;
+  const getDatesInRange = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const date = new Date(start.getTime());
+    const dates = [];
+    while (date <= end) {
+      dates.push(new Date(date).getTime());
+      date.setDate(date.getDate() + 1);
+    }
+    return dates;
+  };
 
-  //   const Reserve = async () => {
-  //     const res = {
-  //       listingId: currentBooking?.listingId?._id,
-  //       totalPrice: currentBooking?.totalPrice,
-  //       startDate: currentBooking?.startDate,
-  //       endDate: currentBooking?.endDate,
-  //       email: currentUser.email,
-  //     };
-  //     await Axios.post("/api/users/reservations", res, {
-  //       headers: { Authorization: `Bearer ${cookies.access_token}` },
-  //     })
-  //       .then((res) => {
-  //         console.log(res);
-  //         navigate('/trips')
-  //       })
-  //       .catch((err) => console.log(err));
-  //   };
+  const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
 
+  //..................Reservation confirmation..................................
+
+  const reservIt = async () => {
+    try {
+      console.log("reservit");
+      const promises = selectedRooms.map(async (roomId) => {
+        const res = await axios.put(`/api/rooms/availability/${roomId}`, {
+          dates: alldates,
+          hotelName,
+          selectedRooms,
+        });
+        return res.data;
+      });
+      const results = await Promise.all(promises);
+      dispatch({
+        type: "BOOKING_SUCCESS",
+        payload: { hotelDetails: bookedHotels?.hotelDetails },
+      });
+      toast.success("Your room has been reserved successfully.");
+      selectedRooms([]);
+    } catch (error) {
+      console.error(error, "error");
+    }
+  };
+
+  //..................................Razor-Pay......................................
   const Razorpay = async (e) => {
     e.preventDefault();
 
     var options = {
       key: "rzp_test_LarllNYjBbsQE5",
       key_secret: "uRYhTQETdBPllUGu5FcKBLyF",
-      amount: (bookedHotels?.hotelDetails?.cheapestPrice + 450)* 100,
+      amount: (bookedHotels?.hotelDetails?.cheapestPrice + 450) * 100,
       currency: "INR",
       name: "Journey Jotter",
       description: "Just For The Text Purpose",
@@ -55,21 +75,20 @@ const Payment = () => {
         console.log(response, "response");
         const { razorpay_payment_id: payment_id } = response;
         console.log(payment_id, "payment ID");
+        reservIt();
         if (response) {
-            const updateStatus = axios.post(
-              "/api/payment/rpayment",
-              {
-                payment_id,
-                hotelName,
-                user,
-                currentBooking:bookedHotels?.hotelDetails,
-                totalPrice,
-              },
-            );
-            navigate("/")
-            toast.success("payment successfull")
-
+          const updateStatus = axios.post("/api/payment/rpayment", {
+            payment_id,
+            hotelName,
+            user,
+            currentBooking: bookedHotels?.hotelDetails,
+            totalPrice,
+          });
+          toast.success("payment successfull");
+          navigate("/");
         }
+  
+        
       },
       prefill: {
         name: "Arshaquu",
@@ -89,7 +108,7 @@ const Payment = () => {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div
         style={{
           display: "flex",
@@ -169,7 +188,7 @@ const Payment = () => {
         </div>
 
         <div style={{ paddingTop: "3rem" }}>
-          <Card style={{objectFit:"cover",width:"40rem"}}>
+          <Card style={{ objectFit: "cover", width: "40rem" }}>
             <img
               src={bookedHotels?.hotelDetails?.HotelImageUpload[0]}
               alt="card-image"

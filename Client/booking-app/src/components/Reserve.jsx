@@ -5,16 +5,16 @@ import {
   faPersonWalkingDashedLineArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import useFetch from "../components/hooks/UseFetch.js";
-import { useState } from "react";
 import { useContext } from "react";
 import { SearchContext } from "../context/SearchContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BookingContext } from "../context/BookingContext.jsx";
+import { ReserveContext } from "../context/ReserveContext.jsx";
 
 const Reserve = ({ setOpen, hotelId, hotelName, hotelDetails }) => {
-  const [selectedRooms, setSelectedRooms] = useState([]);
+  const { selectedRooms, setSelectedRooms } = useContext(ReserveContext);
   const { data, loading, error } = useFetch(
     `http://localhost:9900/api/hotels/room/${hotelId}`
   );
@@ -64,30 +64,13 @@ const Reserve = ({ setOpen, hotelId, hotelName, hotelDetails }) => {
   const navigate = useNavigate();
   // console.log(selectedRooms);
 
-  const handleClick = async () => {
-    try {
-      const promises = selectedRooms.map(async (roomId) => {
-        const res = await axios.put(`/api/rooms/availability/${roomId}`, {
-          dates: alldates,
-          hotelName,
-          selectedRooms,
-        });
-        return res.data;
-      });
-
-      const results = await Promise.all(promises);
-
-      setOpen(false);
-      navigate("/payment");
-      toast.success(
-        "Your room has been reserved successfully. Please complete the payment to confirm the booking."
-      );
-
-      dispatch({ type: "BOOKING_SUCCESS", payload:{hotelDetails} });
-    } catch (error) {
-      console.error(error, "error");
-    }
+  const handleClick = (e) => {
+    e.preventDefault();
+    setOpen(false);
+    navigate("/payment");
   };
+
+
   return (
     <div className="reserve">
       <div className="rContainer">
@@ -121,7 +104,7 @@ const Reserve = ({ setOpen, hotelId, hotelName, hotelDetails }) => {
             </div>
           </div>
         ))}
-        <button onClick={() => handleClick()} className="rButton">
+        <button onClick={handleClick} className="rButton">
           Reserve Now!
         </button>
       </div>

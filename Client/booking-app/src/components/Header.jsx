@@ -74,7 +74,7 @@ function Header({ type }) {
             <FontAwesomeIcon icon={faCar} />
             <span>Car rentals</span>
           </div>
-          <div className="headerListItem">
+          <div className="headerListItem" onClick={()=>navigate('/attractions')}>
             <FontAwesomeIcon icon={faBed} />
             <span>Attractions</span>
           </div>
