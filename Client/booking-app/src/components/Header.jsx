@@ -18,7 +18,7 @@ import { useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
 
 function Header({ type }) {
-    const [ destination, setDestination] = useState("");
+  const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
@@ -35,7 +35,7 @@ function Header({ type }) {
     room: 1,
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -49,10 +49,18 @@ function Header({ type }) {
 
   const { dispatch } = useContext(SearchContext);
 
-  const handleSearch = ()=> {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options }})
-   navigate("/hotels", {state:{ destination, dates, options }})
-  }
+  const handleSearch = () => {
+    const lowercasedDestination = destination.toLowerCase();
+
+    dispatch({
+      type: "NEW_SEARCH",
+      payload: { destination: lowercasedDestination, dates, options },
+    });
+
+    navigate("/hotels", {
+      state: { destination: lowercasedDestination, dates, options },
+    });
+  };
 
   return (
     <div className="header">
@@ -61,24 +69,33 @@ function Header({ type }) {
           type === "list" ? "headerContainer listMode" : "headerContainer"
         }
       >
-        <div className="headerList" >
-          <div className="headerListItem active" onClick={()=>navigate('/')}>
+        <div className="headerList">
+          <div className="headerListItem active" onClick={() => navigate("/")}>
             <FontAwesomeIcon icon={faBed} />
             <span>Stays</span>
           </div>
-          <div className="headerListItem" onClick={()=>navigate('/flights')}>
+          <div className="headerListItem" onClick={() => navigate("/flights")}>
             <FontAwesomeIcon icon={faPlane} />
             <span>Flights</span>
           </div>
-          <div className="headerListItem" onClick={()=>navigate('/carrentals')}>
+          <div
+            className="headerListItem"
+            onClick={() => navigate("/carrentals")}
+          >
             <FontAwesomeIcon icon={faCar} />
             <span>Car rentals</span>
           </div>
-          <div className="headerListItem" onClick={()=>navigate('/attractions')}>
+          <div
+            className="headerListItem"
+            onClick={() => navigate("/attractions")}
+          >
             <FontAwesomeIcon icon={faBed} />
             <span>Attractions</span>
           </div>
-          <div className="headerListItem" onClick={()=>navigate('/airporttaxi')}>
+          <div
+            className="headerListItem"
+            onClick={() => navigate("/airporttaxi")}
+          >
             <FontAwesomeIcon icon={faTaxi} />
             <span>Airport taxis</span>
           </div>
@@ -97,7 +114,7 @@ function Header({ type }) {
                   type="text"
                   placeholder="where are you going?"
                   className="headerSearchInput"
-                  onChange={(e)=> setDestination (e.target.value)}
+                  onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
               <div className="headerSearchItem">

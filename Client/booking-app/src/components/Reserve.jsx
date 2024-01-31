@@ -21,8 +21,9 @@ const Reserve = ({ setOpen, hotelId, hotelName, hotelDetails }) => {
   const { dates } = useContext(SearchContext);
   const { dispatch } = useContext(BookingContext);
 
-  console.log(hotelDetails, "hai");
-  // const currentHotel = hotelDetails;
+
+  // console.log(hotelDetails, "hai");
+  const currentHotel = hotelDetails;
   // console.log(currentHotel);
 
   const getDatesInRange = (startDate, endDate) => {
@@ -66,6 +67,10 @@ const Reserve = ({ setOpen, hotelId, hotelName, hotelDetails }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    dispatch({
+      type: "BOOKING_SUCCESS",
+      payload: { hotelDetails:hotelDetails },
+    });
     setOpen(false);
     navigate("/payment");
   };

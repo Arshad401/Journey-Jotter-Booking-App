@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Hotel from "./pages/HotelDetails";
 import Chart from "./components/Chart";
+import CouponForm from "./pages/AddCoupon";
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="/showrooms" element={<ProtectRoute><ShowRooms/></ProtectRoute>} />
             <Route path="/hoteldetails/:id" element={<ProtectRoute><Hotel/></ProtectRoute>} />
             <Route path="/dash" element={<ProtectRoute><Chart/></ProtectRoute>} />
+            <Route path="/addcoupon" element={<ProtectRoute><CouponForm/></ProtectRoute>} />
           </Route>
         </Routes>
       </BrowserRouter>

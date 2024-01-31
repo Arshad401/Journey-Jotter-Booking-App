@@ -5,7 +5,8 @@ import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
-import paymentRoute from "./routes/payment.js"
+import paymentRoute from "./routes/payment.js";
+import coupenRoute from "./routes/coupen.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
@@ -38,7 +39,8 @@ app.use ("/api/auth", authRoute);
 app.use ("/api/users", usersRoute);
 app.use ("/api/hotels", hotelsRoute);
 app.use ("/api/rooms", roomsRoute);
-app.use("/api/payment",paymentRoute)
+app.use("/api/payment",paymentRoute);
+app.use("/api/coupen",coupenRoute);
 
 
 app.use ((err, req, res, next)=> {

@@ -12,7 +12,8 @@ import { ReserveContext } from "../context/ReserveContext";
 
 const Payment = () => {
   const navigate = useNavigate();
-  const { bookedHotels, dispatch } = useContext(BookingContext);
+  const { bookedHotels } = useContext(BookingContext);
+  console.log(bookedHotels);
   const { dates } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
   const { selectedRooms, setSelectedRooms } = useContext(ReserveContext);
@@ -49,12 +50,9 @@ const Payment = () => {
         return res.data;
       });
       const results = await Promise.all(promises);
-      dispatch({
-        type: "BOOKING_SUCCESS",
-        payload: { hotelDetails: bookedHotels?.hotelDetails },
-      });
+     
       toast.success("Your room has been reserved successfully.");
-      selectedRooms([]);
+      setSelectedRooms([]);
     } catch (error) {
       console.error(error, "error");
     }
