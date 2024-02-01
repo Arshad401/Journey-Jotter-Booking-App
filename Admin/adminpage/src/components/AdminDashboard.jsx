@@ -20,6 +20,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import { Outlet, useNavigate } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
@@ -113,6 +114,9 @@ export default function AdminDashboard() {
   }
   const handleAddCouponbuttonClick = () => {
     navigate ('/addcoupon')
+  }
+  const handleShowCouponbuttonClick = () => {
+    navigate ('/showcoupon')
   }
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -222,6 +226,12 @@ export default function AdminDashboard() {
                 <ConfirmationNumberIcon/>
               </ListItemIcon>
               <ListItemText primary="Add Coupon" />
+            </ListItemButton>
+            <ListItemButton  onClick={handleShowCouponbuttonClick}>
+              <ListItemIcon>
+                <LocalActivityIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Show Coupon" />
             </ListItemButton>
           </List>
           <Divider sx={{ my: 1 }} />
