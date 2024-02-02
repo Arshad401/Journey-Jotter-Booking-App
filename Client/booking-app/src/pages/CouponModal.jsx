@@ -3,10 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useState } from 'react';
-
+import { toast } from "react-toastify";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,28 +16,31 @@ const style = {
   p: 4,
 };
 
-export default function CouponModal() {
+export default function CouponModal({ code }) {
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [coupen, setCoupen] = useState([]);
 
-
-  async function Coupens() {
-    const list = await axios.get(
-      "http://localhost:9900/api/coupen/getallcoupon"
-    );
-    // console.log(list.data.coupons)
-    setCoupen(list.data.coupons);
-  }
-  useEffect(() => {
-    Coupens();
-  }, []);
-  console.log(coupen)
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(code);
+     toast.success("copied to clip board")
+  };
 
   return (
     <div>
-        <button style={{background:"none",border:"none",fontSize:"1.3rem",fontWeight:"bold",cursor:"pointer"}} onClick={handleOpen}>View More</button>
+      <button
+        style={{
+          background: 'none',
+          border: 'none',
+          fontSize: '1.3rem',
+          fontWeight: 'bold',
+          cursor: 'pointer',
+        }}
+        onClick={handleOpen}
+      >
+        View More
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -49,8 +49,14 @@ export default function CouponModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-           Coupon code
+            Coupon code: {code}
           </Typography>
+          <Button variant="contained" onClick={handleCopyToClipboard} style={{margin:'30px'}}>
+            Copy to Clipboard
+          </Button>
+          <Button variant="contained" onClick={handleClose} style={{ marginLeft: '70px' }}>
+            Close
+          </Button>
         </Box>
       </Modal>
     </div>

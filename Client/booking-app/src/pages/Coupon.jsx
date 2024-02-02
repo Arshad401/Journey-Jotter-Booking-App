@@ -1,40 +1,42 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 import moment from "moment";
 import couponpic from "../assets/cpn.png";
 import CouponModal from "./CouponModal";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function Coupon() {
-  const [coupen, setCoupen] = useState([]);
+  const [coupons, setCoupons] = useState([]);
 
-  async function Coupens() {
-    const list = await axios.get(
-      "http://localhost:9900/api/coupen/getallcoupon"
-    );
-    // console.log(list.data.coupons)
-    setCoupen(list.data.coupons);
+  async function fetchCoupons() {
+    try {
+      const response = await axios.get(
+        "http://localhost:9900/api/coupen/getallcoupon"
+      );
+      setCoupons(response.data.coupons);
+    } catch (error) {
+      console.error("Error fetching coupons:", error);
+    }
   }
+
   useEffect(() => {
-    Coupens();
+    fetchCoupons();
   }, []);
-//   console.log(coupen)
+
+  console.log(coupons);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
+
   return (
     <div
       style={{
@@ -42,47 +44,54 @@ export default function Coupon() {
         justifyContent: "space-around",
         flexWrap: "wrap",
         gap: "2rem",
-      }}
-    >
-      {coupen.map((item) => (
-        <div key={item._id}>
-          {/* <Box sx={{ maxWidth: 260 }}>
-            <Card variant="outlined" style={{boxShadow:"5px 5px 10px rgba(0, 0, 0, 0.2)"}}>
-              <React.Fragment>
-                <CardContent>
-                  <Typography variant="h5" component="div">
-                    code:
-                    {item.code}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                   <b> Discount:</b>
-                    {item.discountAmount}
-                  </Typography>
-                  <Typography variant="body2">
-                    Expires in:
-                    {moment(item.expirationDate).format("DD/MM/YY")}
-                  </Typography>
-                </CardContent>
-              </React.Fragment>
-            </Card>
-          </Box> */}
-          <div style={{position: "relative"}}>
-            <img
-              src={couponpic}
-              style={{width: "30rem", height: "15rem"}}
-              alt="image"
-            />
-            <p style={{position: "absolute", top: "20%", left: "41%", transform:" translate(-50%, -50%)",color: "black", fontSize: "1.5rem", fontWeight: "bold"}}>
+      }}>
+
+       {/* <Slider
+        {...settings}
+     >  */}
+        {coupons.map((item) => (
+          <div key={item._id}>
+            <div style={{ position: "relative" }} >
+              <img
+                src={couponpic}
+                style={{ width: "25rem", height: "13rem" }}
+                alt="image"
+              />
+              <p
+                style={{
+                  position: "absolute",
+                  top: "20%",
+                  left: "41%",
+                  transform: " translate(-50%, -50%)",
+                  color: "black",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                }}
+              >
                 Discount amount: {item.discountAmount}/- <br />
-                Expiration date: {moment(item.expirationDate).format("DD/MM/YY")} <br />
+                Expiration date:{" "}
+                {moment(item.expirationDate).format("DD/MM/YY")} <br />
                 Minimum purchase: {item.minimumPurchase}/-
-            </p>
-            <p style={{position: "absolute", top: "60%", left: "70%", transform:" translate(-50%, -50%)",color: "black", fontSize: "1.5rem", fontWeight: "bold",cursor:"pointer"}}>
-                <CouponModal/>
-            </p>
+              </p>
+              <p
+                style={{
+                  position: "absolute",
+                  top: "60%",
+                  left: "70%",
+                  transform: " translate(-50%, -50%)",
+                  color: "black",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                <CouponModal code={item.code}/>
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+        
+      {/* </Slider> */}
+      </div>
   );
 }
