@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useState, useContext } from "react";
 import Card from "@mui/material/Card";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,9 +18,13 @@ const Payment = () => {
   const { user } = useContext(AuthContext);
   const { selectedRooms, setSelectedRooms } = useContext(ReserveContext);
 
+  const [showCouponInput, setShowCouponInput] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
 
   const hotelName = bookedHotels?.hotelDetails?.name;
-  const totalPrice = bookedHotels?.hotelDetails?.cheapestPrice + 450;
+  
+
+  const [totalPrice, setTotalAmount] = useState(bookedHotels?.hotelDetails?.cheapestPrice + 450);
 
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -36,8 +40,6 @@ const Payment = () => {
 
   const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
 
-  //..................Reservation confirmation..................................
-
   const reservIt = async () => {
     try {
       console.log("reservit");
@@ -50,7 +52,6 @@ const Payment = () => {
         return res.data;
       });
       const results = await Promise.all(promises);
-     
       toast.success("Your room has been reserved successfully.");
       setSelectedRooms([]);
     } catch (error) {
@@ -58,14 +59,12 @@ const Payment = () => {
     }
   };
 
-  //..................................Razor-Pay......................................
   const Razorpay = async (e) => {
     e.preventDefault();
-
     var options = {
       key: "rzp_test_LarllNYjBbsQE5",
       key_secret: "uRYhTQETdBPllUGu5FcKBLyF",
-      amount: (bookedHotels?.hotelDetails?.cheapestPrice + 450) * 100,
+      amount: (totalPrice) * 100,
       currency: "INR",
       name: "Journey Jotter",
       description: "Just For The Text Purpose",
@@ -85,8 +84,6 @@ const Payment = () => {
           toast.success("payment successfull");
           navigate("/");
         }
-  
-        
       },
       prefill: {
         name: "Arshaquu",
@@ -103,6 +100,44 @@ const Payment = () => {
     var pay = new window.Razorpay(options);
     pay.open();
   };
+
+  const applyCoupon = async () => {
+    try {
+      const response = await axios.post("/api/coupen/applycoupon", {
+        propertyId: bookedHotels?.hotelDetails?._id, 
+        couponCode: couponCode
+      });
+  
+      if (response.data.success) {
+        const discountedPrice = response.data.discountedPrice;
+        setTotalAmount(discountedPrice + 450);
+        toast.success("Coupon applied successfully");
+  
+      
+        const couponData = JSON.parse(localStorage.getItem("couponData")) || {};
+        
+     
+        const hotelCouponData = couponData[bookedHotels?.hotelDetails?._id] || {};
+  
+        if (hotelCouponData[couponCode]) {
+          toast.warning("Coupon is already applied by the current user");
+        } else {
+      
+          hotelCouponData[couponCode] = discountedPrice;
+          couponData[bookedHotels?.hotelDetails?._id] = hotelCouponData;
+          
+          
+          localStorage.setItem("couponData", JSON.stringify(couponData));
+        }
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error applying coupon:", error);
+      toast.error("Failed to apply coupon");
+    }
+  };
+  
 
   return (
     <div>
@@ -176,13 +211,63 @@ const Payment = () => {
                 marginTop: "10px",
               }}
             >
-              Total Amount:{bookedHotels?.hotelDetails?.cheapestPrice + 450}
+              Total Amount:{totalPrice}
             </h3>
           </div>
-
-          <button type="button" onClick={Razorpay} className="button-top">
-            PAY NOW
-          </button>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
+            {showCouponInput ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="Enter coupon code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                />
+                <button
+                  style={{
+                    backgroundColor: "black",
+                    color: "white",
+                    padding: "5px",
+                  }}
+                  onClick={()=>applyCoupon()}
+                >
+                  Apply Coupon
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowCouponInput(true)}
+                className="button-top"
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  padding: "5px",
+                }}
+              >
+                Redeem Coupon
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={Razorpay}
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                padding: "5px",
+              }}
+            >
+              PAY NOW
+            </button>
+          </div>
         </div>
 
         <div style={{ paddingTop: "3rem" }}>
@@ -194,12 +279,6 @@ const Payment = () => {
           </Card>
         </div>
       </div>
-      {/* <div style={{marginTop:"1rem"}}>
-        <Footer/>
-      </div>
-      <div>
-        <Socialmedia/>
-      </div> */}
     </div>
   );
 };
